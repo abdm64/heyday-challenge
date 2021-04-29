@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heyday-api-dep 
+  namespace: default
+spec: 
+  replicas: 5
+  selector: 
+    matchLabels:
+        component: heyday-api
+  template: 
+    metadata:
+      labels: 
+        component: heyday-api
+    spec:
+      containers: 
+      - name: heetch-api-dte 
+        image: dmp-api-k8s-registry.com:443/dte-heetch-api:v0.0.6 #abdm6464/dte-dnbo:V0.0.8
+        imagePullPolicy: IfNotPresent 
+        ports: 
+        - containerPort: 3000
