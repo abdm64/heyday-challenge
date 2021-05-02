@@ -11,7 +11,7 @@ export class CreateEmployeeInput {
     monthly_budget : number
 
     @Field()
-    company_id : string
+    company_id : number
 
     @Field()
     company_title : string

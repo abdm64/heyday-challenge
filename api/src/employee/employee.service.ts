@@ -1,7 +1,7 @@
+import { Order } from './../order/order.entity';
 import { Injectable } from '@nestjs/common';
-
 import { Employee} from './employee.entity'
-import { Repository } from 'typeorm';
+import { Repository, getConnectionManager, getManager } from 'typeorm';
 import { InjectRepository} from '@nestjs/typeorm';
 import { CreateEmployeeInput } from './employee.input';
 
@@ -46,14 +46,14 @@ export class EmployeeService {
     }
 
     async getEmpByCompanyId(companyName : string) : Promise <any>{
-        const query = this.employeeRepository.createQueryBuilder()
+         const order = await getManager().createQueryBuilder(Employee,'employee').addSelect("employee.employee_id","employee_id").addSelect("employee.","employee_id")
+         
 
+         
+                    
+         
 
-       const empByCom = await  query.select("Employee.employee_Name")
-                                     .where('Employee.company_title = :companyName' ,{ companyName : companyName})
-                                    //)
-                                     .execute()  
-        console.log({ empByCom})
+    //     // select * from employee as e join voucher 
 
     }
 

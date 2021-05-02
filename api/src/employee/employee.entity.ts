@@ -22,7 +22,7 @@ export class Employee extends BaseEntity {
     monthly_budget : number
 
     @Column()
-    company_id : string
+    company_id : number
 
     @Column()
     company_title : string
