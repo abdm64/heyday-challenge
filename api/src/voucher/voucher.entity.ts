@@ -19,15 +19,18 @@ export class Voucher extends BaseEntity {
     @Column()
     Voucher_Amount: number
 
-    @Column()
-    employee_id: number
+   
 
     @Column()
     partner_id : number
     @Column()
-    partner_name : number
+    partner_name : string
 
-    
+    getEmplyee() {
+
+
+
+    }
 
 
 

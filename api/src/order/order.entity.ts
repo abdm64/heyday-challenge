@@ -9,7 +9,7 @@ import { Employee  } from '../employee/employee.entity'
 
 
 @Entity()
-export class Order extends BaseEntity {
+export class Orders extends BaseEntity {
 
     @PrimaryGeneratedColumn() 
     orderId : number
@@ -17,7 +17,7 @@ export class Order extends BaseEntity {
 
 
     @Column()
-    OrderDate: string
+    OrderDate: Date
 
     @Column()
  

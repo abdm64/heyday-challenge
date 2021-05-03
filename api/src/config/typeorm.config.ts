@@ -8,7 +8,7 @@ export const typeOrmConfig : TypeOrmModuleOptions =  {
     password: process.env.DB_PASS ||'0000',
     database :  process.env.DB || 'nestdb',
     entities : [__dirname + '/../**/*entity.{js,ts}'],
-    synchronize : false
+    synchronize : true
     
 
 }
