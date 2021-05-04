@@ -47,12 +47,7 @@ export class EmployeeService {
     }
 
     async getEmpByCompanyId(companyName : string) : Promise <any>{
-         const q3queryNative = await getManager().query(`select "partner_name", sum("Voucher_Amount") as revenue  from
-         voucher v join orders o
-         on o."voucher_id" = v."voucher_id"
-         group by "partner_name"
-         order by revenue desc `)
-
+         
 //Q3
          const query3 = await getManager().createQueryBuilder()
                                                .addSelect('partner_name')
@@ -65,7 +60,7 @@ export class EmployeeService {
 
                                               
 
-    //  1   console.log(orderBulder)
+  
    
 
         const subQuery = await getManager().createQueryBuilder()
@@ -79,24 +74,14 @@ export class EmployeeService {
                                               
 
                                              
-    const query1Native = await getManager().query( `select "employee_id" ,"employee_Name","company_id","company_title","monthly_budget",depenser from employee e join (
-                                                    select sum("Voucher_Amount") as depenser ,o."employee_id" as employeeid, date_part('month',"OrderDate"  )as mois
-                                                    from voucher v join orders o
-                                                    on o."voucher_id" = v."voucher_id"
-                                                    group by o."employee_id", date_part('month',"OrderDate"  )) as subreq
-                                                    on subreq.employeeid = "employee_id"
-                                                    where "monthly_budget"-depenser >10 and mois = 2`)
+  
 
 
                                                
                                                  
                                                 
        const query1 = await getManager().createQueryBuilder()
-                                        .addSelect(`"employee_Name"`)
-                                        .addSelect("employee_id")
-                                        .addSelect("company_title")
-                                        .addSelect("monthly_budget")
-                                        .addSelect("spent")
+                                        .select(`"employee_Name",employee_id, company_title,monthly_budget,spent`)
                                         .addFrom(Employee,'employee')
                                         .innerJoin('('+subQuery.getQuery()+')','subreq','subreq.employeeid = employee_id')
                                         .where(`"monthly_budget"- spent > 10 `)
@@ -108,18 +93,12 @@ export class EmployeeService {
                                     
                                        
 
-                                      //  console.log(query1)
+                                        console.log("1", query1)
 
        
        //Q2
 
-       const query2Native =  await getManager().query(`select e."employee_id","employee_Name", "monthly_budget",date_part ('month',cast (o."OrderDate" as date) ) as month,cast(sum("Voucher_Amount") as integer) as spend,
-       case when sum("Voucher_Amount")> 44 then False else TRUE end as tax_free
-       from  employee e join  orders o on e."employee_id"=o."employee_id" join voucher v
-       on o."voucher_id" = v."voucher_id"
-       where "company_id"='3'
-       group by e."employee_id","employee_Name","monthly_budget",date_part ('month',cast (o."OrderDate" as date) ) 
-       order by cast(e."employee_id"as integer) ,month`)
+      
 
        const company_id : number = 3
        
@@ -145,9 +124,9 @@ export class EmployeeService {
 
 
 
-       console.log(query2)
+   
 
-     ''
+     
 
          
                     
