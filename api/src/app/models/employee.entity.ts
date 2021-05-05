@@ -1,5 +1,7 @@
 
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, getManager } from "typeorm";
+import { Orders } from './orders.entity'
+import {  Voucher  } from './voucher.entity'
 
 
 
@@ -11,6 +13,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class Employee extends BaseEntity {
 
     @PrimaryGeneratedColumn() 
+    
     employee_id : number
 
 
@@ -28,6 +31,12 @@ export class Employee extends BaseEntity {
     company_title : string
 
 
+async getRevenueByPartner(){
+
+
+
+
+}
 
 
 

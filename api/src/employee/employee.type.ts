@@ -19,5 +19,7 @@ export class EmployeeType {
 
     @Field()
     company_title : string
+    @Field()
+    spent : string
 
 }

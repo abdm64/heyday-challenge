@@ -10,11 +10,12 @@ import { MainModule } from './app/main.module'
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig ), 
-    EmployeeModule,
+    MainModule,
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
-     MainModule
+    EmployeeModule
+    
   
   
   

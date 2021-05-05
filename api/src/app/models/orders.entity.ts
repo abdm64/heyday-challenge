@@ -1,5 +1,6 @@
 
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {  Voucher  } from './voucher.entity'
 
 
 
@@ -18,7 +19,7 @@ export class Orders extends BaseEntity {
     OrderDate: Date
 
     @Column()
- 
+  //  @OneToOne(())
     employee_id: number
 
     @Column()

@@ -58,6 +58,8 @@ export class EmployeeService {
                                                .addOrderBy('revenue','DESC')
                                                .execute()
 
+                                           //    console.log(query3)
+
                                               
 
   
@@ -88,12 +90,13 @@ export class EmployeeService {
                                         .andWhere('month = 3')
                                         .execute()
 
+                                        //console.log(query1)
 
                                        
                                     
                                        
 
-                                        console.log("1", query1)
+                                        
 
        
        //Q2
@@ -108,8 +111,9 @@ export class EmployeeService {
        const query2 = await getManager().createQueryBuilder()
                                          .select(`employee."employee_id","employee_Name",monthly_budget `)
                                          .addSelect(`date_part('month',orders."OrderDate"  )`, "month")
-                                         .addSelect(`sum("Voucher_Amount")`,'spend')
-                                         .addSelect('CASE WHEN  sum("Voucher_Amount") > 44 then False else TRUE END', 'tax_free')
+                                         .addSelect(`sum("Voucher_Amount")`,'spent')
+                                         .addSelect('CASE WHEN  sum("Voucher_Amount") > 44 then  ((sum("Voucher_Amount") - 44 ) * 33/100 )  else 0 END', 'tax')
+                                         .addSelect(`CASE WHEN ((sum("Voucher_Amount") - 44 ) * 33/100 ) > 0  then (sum("Voucher_Amount") - 44 ) - ((sum("Voucher_Amount") - 44 ) * 33/100 ) else  0 END`, 'notPaid')
                                          .addFrom(Employee,'employee')
                                          .innerJoin(Orders,'orders',`employee."employee_id"=orders."employee_id"`)
                                          .innerJoin(Voucher,'voucher',`orders."voucher_id" = voucher."voucher_id"`)
@@ -118,8 +122,10 @@ export class EmployeeService {
                                          .addGroupBy(`"employee_Name" , monthly_budget,date_part('month',orders."OrderDate") `)
                                          .addOrderBy('employee."employee_id", month')
                                          .execute()
-                                        
 
+                                        
+                                        
+console.log(query2)
 
 
 
