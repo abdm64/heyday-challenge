@@ -76,7 +76,7 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeInterface[]> {
     .select(`employee."employee_id","employee_Name",monthly_budget , 44 as freeTaxLimit`)
     .addSelect(`date_part('month',orders."OrderDate"  )`, "month")
     .addSelect(`sum("Voucher_Amount")`,'spent')
-    .addSelect('sum("Voucher_Amount") - 44', 'overTaxLimit')
+    .addSelect(' CASE WHEN (sum("Voucher_Amount") - 44) > 0  then  (sum("Voucher_Amount") - 44) else 0 END', 'overTaxLimit')
     .addSelect('CASE WHEN  sum("Voucher_Amount") > 44 then  ((sum("Voucher_Amount") - 44 ) * 33/100 )  else 0 END', 'tax')
     .addSelect(`CASE WHEN ((sum("Voucher_Amount") - 44 ) * 33/100 ) > 0  then (sum("Voucher_Amount") - 44 ) - ((sum("Voucher_Amount") - 44 ) * 33/100 ) else  0 END`, 'net')
     .addFrom(Employee,'employee')
