@@ -9,7 +9,7 @@ export class EmployeeType {
     employee_Name : string
 
     @Field()
-    emplyee_id : number
+    employee_id : number
 
 
     @Field()
@@ -18,7 +18,8 @@ export class EmployeeType {
   @Field()
   monthly_budget : number
   @Field()
-  spent : string
+  spent : number
+  
 
    
 

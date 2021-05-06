@@ -1,10 +1,12 @@
-import { EmployeeInterface } from './models/employee.interface';
-import { Revenue } from './models/revenu.interface';
-import { Voucher } from './../voucher/voucher.entity';
+
+import { EmployeeInterface } from './models/interfaces/employee.interface';
+import { Revenue } from './models/interfaces/revenu.interface';
+import { Voucher } from './models/entities/voucher.entity';
 import { getManager } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { Orders } from './models/orders.entity';
-import { Employee } from 'src/employee/employee.entity';
+import { Orders } from './models/entities/orders.entity';
+import { Employee } from './models/entities/employee.entity';
+import { TaxInformationType } from './models/interfaces/tax.interface';
 
 
 
@@ -68,10 +70,30 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeInterface[]> {
 
 
 
-getTaxInformation ( company_id : number) {
+ async getTaxInformation ( company_id : number) : Promise<TaxInformationType[]> {
+
+    const taxInformation : TaxInformationType[]  = await getManager().createQueryBuilder()
+    .select(`employee."employee_id","employee_Name",monthly_budget , 44 as freeTaxLimit`)
+    .addSelect(`date_part('month',orders."OrderDate"  )`, "month")
+    .addSelect(`sum("Voucher_Amount")`,'spent')
+    .addSelect('sum("Voucher_Amount") - 44', 'overTaxLimit')
+    .addSelect('CASE WHEN  sum("Voucher_Amount") > 44 then  ((sum("Voucher_Amount") - 44 ) * 33/100 )  else 0 END', 'tax')
+    .addSelect(`CASE WHEN ((sum("Voucher_Amount") - 44 ) * 33/100 ) > 0  then (sum("Voucher_Amount") - 44 ) - ((sum("Voucher_Amount") - 44 ) * 33/100 ) else  0 END`, 'net')
+    .addFrom(Employee,'employee')
+    .innerJoin(Orders,'orders',`employee."employee_id"=orders."employee_id"`)
+    .innerJoin(Voucher,'voucher',`orders."voucher_id" = voucher."voucher_id"`)
+    .where(`"company_id"= ${company_id}`)
+    .addGroupBy(`employee.employee_id`)
+    .addGroupBy(`"employee_Name" , monthly_budget,date_part('month',orders."OrderDate") `)
+    .addOrderBy('employee."employee_id", month')
+
+    .execute()
 
 
 
+   
 
+
+    return taxInformation
 }
 }// 

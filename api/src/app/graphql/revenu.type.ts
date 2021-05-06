@@ -9,7 +9,7 @@ export class RevenueType {
     partner_name: string
 
     @Field()
-    revenue : string
+    revenue : number
 
    
 

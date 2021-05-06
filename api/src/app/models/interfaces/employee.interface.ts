@@ -6,7 +6,7 @@ export interface EmployeeInterface {
     emplyee_id : number,
     company_title : string ,
     monthly_budget : number,
-    spent : string
+    spent : number
   
   }
   

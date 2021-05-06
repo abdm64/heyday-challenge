@@ -19,7 +19,7 @@ export class RevenueResolver  {
 
     @Query(returns => [RevenueType])
    getRevenueByPartner(){
-   console.log('here')
+  
        
         return   this._appService.getRevenueByPartner()
     }

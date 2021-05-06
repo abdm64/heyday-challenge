@@ -1,4 +1,4 @@
-import { EmployeeType } from './../../employee/employee.type';
+import { EmployeeType } from '../graphql/employee.type';
 import { AppService } from './../app.service';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 
