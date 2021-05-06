@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: heyday-api-dep 
-  namespace: default
+  namespace: hey-dey-namespace
 spec: 
-  replicas: 5
+  replicas: 1
   selector: 
     matchLabels:
         component: heyday-api
@@ -14,8 +14,38 @@ spec:
         component: heyday-api
     spec:
       containers: 
-      - name: heetch-api-dte 
-        image: dmp-api-k8s-registry.com:443/dte-heetch-api:v0.0.6 #abdm6464/dte-dnbo:V0.0.8
+      - name: heyday-api
+        image: abdm6464/hey-day-app:V0.0.1
         imagePullPolicy: IfNotPresent 
         ports: 
         - containerPort: 3000
+        env:
+          - name: DB_HOST
+            value: postgres-cluster-ip-service
+          - name: DB_USER
+            value: postgres
+          - name: DB_NAME
+            value: db 
+          - name: DB_PASS 
+            valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+
+--- 
+
+
+
+apiVersion: v1
+kind: Service
+metadata: 
+    name: heyday-svc
+    namespace: hey-dey-namespace 
+spec: 
+  type: ClusterIP
+  ports: 
+    - port: 3000 #allow other pods access to this pod
+      targetPort: 3000 #the target port of the containter
+  selector: 
+    component:  heyday-api
+                 
