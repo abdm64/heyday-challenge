@@ -164,6 +164,8 @@ kubectl apply -f k8s
   - Cluster ip service that connected to the pod .
   - ingress service that connect the cluster ip service with ingress-nginx load balancer to expose it outside (Public) .
 
+ PS : you must install NGINX Ingress Controller on your k8s cluster before applying the final deployment please check this link https://kubernetes.github.io/ingress-nginx/deploy/ for more information. 
+
 - to drop the application just run the command :
 
 ```
