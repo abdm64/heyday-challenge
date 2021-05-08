@@ -1,37 +1,27 @@
 version: "3.8"
 services:
   api:
-    # image: thomas-oliver/nestjs-dockerized 
-    build:
-      dockerfile: /api/Dockerfile.dev
-      context: .
-      # Only will build development stage from our dockerfile
-      target: development
-    # Mount our host Directory to the docker container
-    # Mount (.) current directory to the docker container thomas/src/app
-    # reflect file changes from host to container
-    volumes:
-      - .:/user/src/app
-      - ./thomas/src/app/node_modules
-    # Run in Debug Mode: npm run start:debug --> Don't forget to start your vscode debugger!
-    # Run in dev Mode: npm run start:dev
-    command: npm run start:debug
+    image: abdm6464/heyday-app:V0.0.1
+    # build: api 
+    
+
     depends_on: 
       - postgres
     environment: 
-      DATABASE_URL: postgres://user:password@postgres:5432/db
-      NODE_ENV: development
-      PORT: 3000
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_NAME: db
+      DB_PASS: '0000'
+      
     ports:
-      - 8080:3000
-      # debugging port
-      - 9229:9229
+      - 3000:3000
 
+# Postgres 
   postgres:
     image: postgres:10.4
     environment: 
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: '0000'
       POSTGRES_DB: db
     ports:
       - 35000:5432
@@ -42,7 +32,7 @@ services:
     depends_on:
       - postgres
     environment: 
-      PGADMIN_DEFAULT_EMAIL: admin@admin.de
-      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: '0000'
     ports:
       - 5050:80

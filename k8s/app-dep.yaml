@@ -15,7 +15,7 @@ spec:
     spec:
       containers: 
       - name: heyday-api
-        image: abdm6464/hey-day-app:V0.0.1
+        image: abdm6464/heyday-app:V0.0.1
         imagePullPolicy: IfNotPresent 
         ports: 
         - containerPort: 3000

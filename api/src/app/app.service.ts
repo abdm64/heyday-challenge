@@ -1,11 +1,11 @@
 
 import { EmployeeType } from './graphql/employee.type';
 import { RevenueType  } from './graphql/revenu.type';
-import { Voucher } from './models/entities/voucher.entity';
+import { Voucher } from './models/voucher.entity';
 import { getManager } from 'typeorm';
-import { Injectable } from '@nestjs/common';
-import { Orders } from './models/entities/orders.entity';
-import { Employee } from './models/entities/employee.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Orders } from './models/orders.entity';
+import { Employee } from './models/employee.entity';
 import { TaxType } from './graphql/tax.type';
 
 
@@ -61,14 +61,18 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeType[]> {
                                                 .execute()
 
                                                 
+                                             
+        if ( employeeByComapny.length === 0 ){
 
-
+             throw new NotFoundException(`can't found employee in this month ${ month} that left more than 10 euro`);
+         } 
+                                            
 
 
  return employeeByComapny
 }
 
-
+// || 
 
  async getTaxInformation ( company_id : number) : Promise<TaxType []> {
 
@@ -90,8 +94,11 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeType[]> {
     .execute()
 
 
+    if ( taxInformation.length === 0 ){
 
-   
+        throw new NotFoundException(`can't found tax information for employees in the company with company_id = ${company_id} `);
+    } 
+
 
 
     return taxInformation

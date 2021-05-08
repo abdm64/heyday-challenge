@@ -1,7 +1,6 @@
 import { TaxType } from './../graphql/tax.type';
-
 import { AppService } from './../app.service';
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Args, Query } from '@nestjs/graphql';
 
 
 
@@ -19,8 +18,9 @@ export class TaxResolver  {
 
     @Query(returns => [TaxType])
    getTaxInformationByCompanyId(
-
-    @Args('company_id')  company_id : number
+  
+    @Args('company_id')  
+    company_id : number
    ){
   
        
