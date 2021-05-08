@@ -38,7 +38,7 @@ You need to install the fellowing software in order to get the application up an
 
 ## APP Architecture <a name = "app-archi"></a>
 
-- ![Alt text](./images/app-archi.PNG?raw=true "Title")
+- ![Alt text](./images/app-archi.png?raw=true "Title") 
 
 ### APP Architecture Explained <a name = "app-exp"></a>
 
@@ -137,7 +137,7 @@ docker-compose  down
 
 ## Deployment Architecture <a name = "dep-archi"></a>
 
-- ![Alt text](./images/heyday-dep-archi.PNG?raw=true "Title")
+- ![Alt text](./images/heyday-dep-archi.png?raw=true "Title")
 
 ## Deployment Architecture Explained <a name = "dep-exp"></a>
 
@@ -155,7 +155,7 @@ kubectl create secret generic <secret_name>  --from-literal  PGPASSWORD=<your pa
 kubectl apply -f k8s
 ```
 
-- this will create the fellowing  Kubernetes objects:
+ this will create the fellowing  Kubernetes objects:
 
  - Namespace a virtual cluster for all your resource related to this application ( pods services sercrets)
   - Deployment for the application with one pod ( running container) insuring high availability for that service. 
