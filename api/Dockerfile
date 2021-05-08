@@ -1,30 +1,18 @@
-FROM node:alpine AS development
+FROM node:12-alpine3.10
 
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install  -g rimraf
-
-RUN npm install --only=development
-
-COPY . .
-
-RUN npm run build
-
-FROM node:alpine as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
+# Create app directory, this is in our container/in our image
+WORKDIR /user/src/app
 
 COPY package*.json ./
 
 RUN npm install --only=production
 
+
 COPY . .
 
-COPY --from=development /usr/src/app/dist ./dist
+RUN npm run build
 
-CMD ["node", "dist/main"]
+EXPOSE 3000
+
+
+CMD ["node", "dist/main"] 
