@@ -1,12 +1,12 @@
 
-import { EmployeeInterface } from './models/interfaces/employee.interface';
-import { Revenue } from './models/interfaces/revenu.interface';
+import { EmployeeType } from './graphql/employee.type';
+import { RevenueType  } from './graphql/revenu.type';
 import { Voucher } from './models/entities/voucher.entity';
 import { getManager } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { Orders } from './models/entities/orders.entity';
 import { Employee } from './models/entities/employee.entity';
-import { TaxInformationType } from './models/interfaces/tax.interface';
+import { TaxType } from './graphql/tax.type';
 
 
 
@@ -18,9 +18,9 @@ export class AppService {
 
 
     
-async getRevenueByPartner() : Promise <Revenue[]>{
+async getRevenueByPartner() : Promise <RevenueType[]>{
     
-    const revenueByPartner : Revenue[] = await getManager().createQueryBuilder()
+    const revenueByPartner : RevenueType[] = await getManager().createQueryBuilder()
     .addSelect('partner_name')
     .addSelect('SUM("Voucher_Amount")', 'revenue')
     .from(Voucher,'voucher')
@@ -40,7 +40,7 @@ async getRevenueByPartner() : Promise <Revenue[]>{
 }
 
 
-async getEmployeeByMonth( month : number) : Promise<EmployeeInterface[]> {
+async getEmployeeByMonth( month : number) : Promise<EmployeeType[]> {
 
     const subQuery = await getManager().createQueryBuilder()
                                                  .addSelect('SUM("Voucher_Amount")', 'spent')   
@@ -52,7 +52,7 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeInterface[]> {
                                                  .addGroupBy(`date_part('month',"OrderDate")`)
 
 
-    const employeeByComapny : EmployeeInterface[] = await getManager().createQueryBuilder()
+    const employeeByComapny : EmployeeType[] = await getManager().createQueryBuilder()
                                                 .select(`"employee_Name",employee_id, company_title,monthly_budget,spent`)
                                                 .addFrom(Employee,'employee')
                                                 .innerJoin('('+subQuery.getQuery()+')','subreq','subreq.employeeid = employee_id')
@@ -70,9 +70,9 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeInterface[]> {
 
 
 
- async getTaxInformation ( company_id : number) : Promise<TaxInformationType[]> {
+ async getTaxInformation ( company_id : number) : Promise<TaxType []> {
 
-    const taxInformation : TaxInformationType[]  = await getManager().createQueryBuilder()
+    const taxInformation : TaxType[]  = await getManager().createQueryBuilder()
     .select(`employee."employee_id","employee_Name",monthly_budget , 44 as freeTaxLimit`)
     .addSelect(`date_part('month',orders."OrderDate"  )`, "month")
     .addSelect(`sum("Voucher_Amount")`,'spent')

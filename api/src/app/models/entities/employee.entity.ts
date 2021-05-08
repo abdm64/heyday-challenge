@@ -31,12 +31,7 @@ export class Employee extends BaseEntity {
     company_title : string
 
 
-async getRevenueByPartner(){
 
-
-
-
-}
 
 
 
