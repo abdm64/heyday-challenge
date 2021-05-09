@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment # is not perfect for stateful application 
 metadata:
   name: postgres-deployment
   namespace: hey-dey-namespace
@@ -14,7 +14,7 @@ spec:
         component: postgres
     spec:
       volumes:
-        - name: postgres-storage
+        - name: postgres-storage # storage name
           persistentVolumeClaim:
             claimName: database-persistent-volume-claim
       containers:
@@ -27,7 +27,7 @@ spec:
               mountPath: /var/lib/postgresql/data
               subPath: postgres
           env:
-            - name: POSTGRES_PASSWORD
+            - name: POSTGRES_PASSWORD # gettting the passord from secret 
               valueFrom:
                 secretKeyRef:
                   name: pgpassword

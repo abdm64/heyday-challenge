@@ -1,7 +1,6 @@
-version: "3.8"
+version: "3.1"
 services:
   api:
-    # image: abdm6464/heyday-app:V0.0.1
     build: api 
     depends_on: 
       - postgres
@@ -9,14 +8,15 @@ services:
       DB_HOST: postgres
       DB_USER: postgres
       DB_NAME: db
-      DB_PASS: '0000'
-      
+      DB_PASS: '0000' 
     ports:
       - 3000:3000
 
 # Postgres 
   postgres:
     image: postgres:10.4
+    # volumes:
+    #  - dbdata : /var/lib/postgresql/data
     environment: 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: '0000'
@@ -24,7 +24,9 @@ services:
     ports:
       - 35000:5432
 
-    ### Postgres Adminer ###
+   
+
+    ### PG ADMIN ###
   postgres_admin:
     image: dpage/pgadmin4:4.28
     depends_on:
@@ -34,3 +36,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: '0000'
     ports:
       - 5050:80
+# volumes:
+#    dbdata:
+          

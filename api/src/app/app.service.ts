@@ -2,7 +2,7 @@
 import { EmployeeType } from './graphql/employee.type';
 import { RevenueType  } from './graphql/revenu.type';
 import { Voucher } from './models/voucher.entity';
-import { getManager } from 'typeorm';
+import { getManager,getConnection } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Orders } from './models/orders.entity';
 import { Employee } from './models/employee.entity';
@@ -20,13 +20,14 @@ export class AppService {
     
 async getRevenueByPartner() : Promise <RevenueType[]>{
     
-    const revenueByPartner : RevenueType[] = await getManager().createQueryBuilder()
+    const revenueByPartner : RevenueType[] = await getConnection().createQueryBuilder()
     .addSelect('partner_name')
     .addSelect('SUM("Voucher_Amount")', 'revenue')
     .from(Voucher,'voucher')
     .innerJoin(Orders,'orders','voucher.voucher_id = orders.voucher_id')
     .addGroupBy('partner_name')
     .addOrderBy('revenue','DESC')
+   
     .execute()
 
 
@@ -58,6 +59,7 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeType[]> {
                                                 .innerJoin('('+subQuery.getQuery()+')','subreq','subreq.employeeid = employee_id')
                                                 .where(`"monthly_budget"- spent > 10 `)
                                                 .andWhere( `month = ${month}`)
+                                          
                                                 .execute()
 
                                                 
@@ -90,7 +92,7 @@ async getEmployeeByMonth( month : number) : Promise<EmployeeType[]> {
     .addGroupBy(`employee.employee_id`)
     .addGroupBy(`"employee_Name" , monthly_budget,date_part('month',orders."OrderDate") `)
     .addOrderBy('employee."employee_id", month')
-
+    
     .execute()
 
 

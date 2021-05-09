@@ -26,11 +26,7 @@ export class Voucher extends BaseEntity {
     @Column()
     partner_name : string
 
-    getEmplyee() {
-
-
-
-    }
+   
 
 
 

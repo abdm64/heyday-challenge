@@ -7,7 +7,7 @@ spec:
   replicas: 1
   selector: 
     matchLabels:
-        component: heyday-api
+        component: heyday-api 
   template: 
     metadata:
       labels: 
@@ -21,12 +21,12 @@ spec:
         - containerPort: 3000
         env:
           - name: DB_HOST
-            value: postgres-cluster-ip-service
+            value: postgres-cluster-ip-service # service name for database 
           - name: DB_USER
-            value: postgres
-          - name: DB_NAME
+            value: postgres # database user 
+          - name: DB_NAME # database name
             value: db 
-          - name: DB_PASS 
+          - name: DB_PASS  #  password must be stored in secret CMD ( kubectl create secret generic pgpassword  --from-literal  PGPASSWORD=<your password >)
             valueFrom:
                 secretKeyRef:
                   name: pgpassword
@@ -39,13 +39,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-    name: heyday-svc
+    name: heyday-svc # service name that conencted to loadbalancer 
     namespace: hey-dey-namespace 
 spec: 
   type: ClusterIP
   ports: 
-    - port: 3000 #allow other pods access to this pod
-      targetPort: 3000 #the target port of the containter
+    - port: 3000 
+      targetPort: 3000 
   selector: 
     component:  heyday-api
                  

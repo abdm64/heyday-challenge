@@ -2,6 +2,7 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
+- [Folder Structure](#folder)
 - [Development ](#development)
 
   - [App Architecture](#app-archi)
@@ -18,11 +19,11 @@
 
 ## 🧐 About <a name = "about"></a>
 
-- This graphql api is connected to postgress database to retrive data, a challenge from [heyday](https://www.heydaypeople.com/) to join the team as backend Engineer
+- This graphql api is connected to Postgres database to retrieve data, a challenge from [heyday](https://www.heydaypeople.com/) to join the team as backend Engineer
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live  kubernets system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live  Kubernetes system.
 
 ### Prerequisites
 
@@ -30,9 +31,10 @@ You need to install the fellowing software in order to get the application up an
 
 - Node.js and npm.
 - NestJS.
-- Postgress database. 
+- Postgres database. 
 - Docker.
 - Kubernetes on cloud.
+
 
 # Development <a name = "development"></a>
 
@@ -44,18 +46,18 @@ You need to install the fellowing software in order to get the application up an
 
 The application architecture contain 2 part
 
-- Simple  GraphQl API  that connect to Postgress  database with define tables network using TypeORM  as interface 
+- Simple  GraphQl API  that connect to Postgres  database with define tables  using TypeORM  as interface to retrieve information 
 
 
 ### Installing
 
-- Download and Install node.js and NPM from https://nodejs.org/en/download/ .
+- Download and Install node.js and NPM from https://nodejs.org/en/download/ 
 
-### Running the Node.js application <a name = "app-run"></a>
+### Running the Nest.JS application <a name = "app-run"></a>
 
 - Download or clone the project code from https://github.com/abdm64/heyday-challenge
 
-- install NestJs Framework from the npm cli  for more infomation please visit [NestJS](https://nestjs.com/) 
+- install NestJs Framework from the npm cli  for more information please visit [NestJS Web site](https://nestjs.com/) 
 
 - Install all required npm packages by running npm install from the command line in the api  directory  (where the package.json is located).
 
@@ -67,9 +69,9 @@ cd api
 npm install
 ```
 
-- Before start the application you should change the  keys in the api/src/config folder (ipadress, user, password etc) in order to connect to the postgres  database.
+- Before start the application you should change the  keys in the api/src/config directory (host, user, password and db name ) in order to connect to the postgres  database.
 
-- Start the application by running npm start from the command line in the app folder, you should see the message:  "Nest application successfully started".
+- Start the application by running npm start from the command line in the api directory , you should see the message:  "Nest application successfully started".
 
 
 ```
@@ -95,7 +97,7 @@ npm start
 ### Build Docker image
 
 - Build your own docker image and push it to your repo by running "docker build -t my-app-name:v1 . "
-  from the command line in app folder
+  from the command line in api directory
 
 ```
 cd api
@@ -115,11 +117,11 @@ you need to push the image to [Docker hub](https://hub.docker.com) or your own p
 docker run -e [inject your env variable here] my-app-name:v1
 
 ```
-PS: you need to run the docker image and attached it to a  running postgress image 
+PS: you need to run the docker image and attached it to a  running Postgres image 
 
 ### Docker compose
 
-- Also you can run the application  connected to a database as service by running with pg admin to manage the postgres database  at port 5050 you can change it in yamal file 
+- Also you can run the application  connected to a database as service by running with pg admin to manage the Postgres database  at port 5050 you can change it in docker-compose  file 
 
 ```
 docker-compose up
@@ -133,7 +135,7 @@ and the docker-compose.yaml handle all the task for you running the application 
 docker-compose  down
 ```
 
-## Kubernetes GKE <a name = "k8s"></a>
+## Kubernetes <a name = "k8s"></a>
 
 ## Deployment Architecture <a name = "dep-archi"></a>
 
@@ -143,23 +145,24 @@ docker-compose  down
 
 - Please fellow the instruction in the app-dep.yaml file in the k8s folder to update all information needed ( env var ) in order to the application work on Kubernetes cluster
 
-- create secret in the same namespace to store your pg password by running the cammand 
+- create secret in the same namespace to store your pg password by running the Cammand 
 
 ```
-kubectl create secret generic <secret_name>  --from-literal  PGPASSWORD=<your password encoded>
+kubectl create secret generic <secret_name>  --from-literal  PGPASSWORD=<your password>
 ```
 
-- To run the application on Kubernetes cluster ( GKE) just run the fellowing command
+- To run the application on Kubernetes cluster  just run the fellowing command
 
 ```
 kubectl apply -f k8s
+
 ```
 
  this will create the fellowing  Kubernetes objects:
 
- - Namespace a virtual cluster for all your resource related to this application ( pods services sercrets)
+  - Namespace a virtual cluster for all your resource related to this application ( pods services secret)
   - Deployment for the application with one pod ( running container) insuring high availability for that service. 
-  - Deployment for the postgress database in one pod  ( not the perfect solution for statful application )
+  - Deployment for the Postgres database in one pod  ( not the perfect solution for stateful application )
   - PVC to store the data from the database 
   - Cluster ip service that connected to the pod .
   - ingress service that connect the cluster ip service with ingress-nginx load balancer to expose it outside (Public) .
@@ -170,7 +173,9 @@ kubectl apply -f k8s
 
 ```
 kubectl delete  -f k8s
+
 ```
+this will delete all kubernetes objects
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
