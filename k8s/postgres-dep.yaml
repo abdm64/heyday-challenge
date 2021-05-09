@@ -36,3 +36,10 @@ spec:
               value: postgres
             - name : POSTGRES_DB
               value: db   
+          # resources:  if you want limit the ressource used by the db 
+          #   requests:
+          #     memory: "50Mi"
+          #     cpu: "500m"
+          #   limits:
+          #     memory: "500Mi"
+          #     cpu: "2000m"    
