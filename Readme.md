@@ -55,7 +55,7 @@ The application architecture contain 2 part
 
 ### Running the Nest.JS application <a name = "app-run"></a>
 
-- Download or clone the project code from https://github.com/abdm64/heyday-challenge
+- Download or clone the project code from https://github.com/abdm64/nest-graph-ql
 
 - install NestJs Framework from the npm cli  for more information please visit [NestJS Web site](https://nestjs.com/) 
 
