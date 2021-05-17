@@ -19,7 +19,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-- This graphql api is connected to Postgres database to retrieve data, a challenge from [heyday](https://www.heydaypeople.com/) to join the team as backend Engineer
+- This graphql api is connected to Postgres database to retrieve data .
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
